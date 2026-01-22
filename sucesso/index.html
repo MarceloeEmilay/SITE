@@ -67,5 +67,12 @@
             <a href="/" style="color: #999; text-decoration: none; font-size: 14px;">Voltar para o site</a>
         </div>
     </div>
+    <script>
+window.addEventListener('load', function() {
+    const audioSucesso = new Audio('static/sucesso.mp3');
+    // Toca o áudio automaticamente ao carregar a página de confirmação
+    audioSucesso.play().catch(e => console.log("Aguardando interação para tocar áudio."));
+});
+</script>
 </body>
 </html>
