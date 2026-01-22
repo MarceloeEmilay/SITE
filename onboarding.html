@@ -136,10 +136,20 @@
         <button type="submit">FINALIZAR E ENVIAR DADOS <i class="fas fa-arrow-right"></i></button>
     </form>
 </div>
-
+<script>
+window.addEventListener('load', function() {
+    const audio = new Audio('static/boas-vindas.mp3');
+    // Os navegadores bloqueiam som automático, mas como o usuário 
+    // veio de um clique no botão anterior, ele costuma permitir.
+    audio.play().catch(error => {
+        console.log("O navegador bloqueou o áudio automático. Ele tocará na próxima interação.");
+    });
+});
+</script>
 </body>
 
 </html>
+
 
 
 
