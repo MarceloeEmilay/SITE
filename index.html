@@ -155,41 +155,26 @@
         </div>
     </footer>
     <script>
+// Pré-carrega o áudio para não ter atraso no clique
+const audioBoasVindas = new Audio('static/boas-vindas.mp3');
+
 document.getElementById('btn-onboarding').addEventListener('click', function(e) {
-    // Cancela qualquer fala anterior para não sobrepor e tremer
-    window.speechSynthesis.cancel();
-
-    const msg = new SpeechSynthesisUtterance();
-    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário.";
+    // Toca o áudio imediatamente ao clicar
+    audioBoasVindas.play();
     
-    // Configurações de Estabilidade
-    msg.lang = 'pt-BR';
-    msg.rate = 0.85; // Velocidade levemente reduzida remove o efeito tremido
-    msg.pitch = 1.0; // Tom neutro para parecer mais humana e menos robótica
-    msg.volume = 1.0;
-
-    const carregarVozPerfeita = () => {
-        const voices = window.speechSynthesis.getVoices();
-        // Prioridade 1: Voz do Google (Mais natural) | Prioridade 2: Maria (Microsoft)
-        const melhorVoz = voices.find(v => v.name.includes('Google') && v.lang === 'pt-BR') || 
-                          voices.find(v => v.name.includes('Maria') && v.lang === 'pt-BR');
-        
-        if (melhorVoz) {
-            msg.voice = melhorVoz;
-        }
-        
-        window.speechSynthesis.speak(msg);
-    };
-
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = carregarVozPerfeita;
-    }
-    carregarVozPerfeita();
+    // Opcional: Adiciona um pequeno atraso de 0.5s na transição de página 
+    // apenas para o cliente ouvir o início da frase antes de mudar a tela
+    e.preventDefault();
+    const destino = this.href;
+    setTimeout(() => {
+        window.location.href = destino;
+    }, 500); 
 });
 </script>
 </body>
 
 </html>
+
 
 
 
