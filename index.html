@@ -154,26 +154,11 @@
             <p>&copy; 2026 Sistemas New Screen. Todos os direitos reservados. <br> Tecnologia em Saúde sob medida.</p>
         </div>
     </footer>
-    <script>
-// Pré-carrega o áudio para não ter atraso no clique
-const audioBoasVindas = new Audio('static/boas-vindas.mp3');
-
-document.getElementById('btn-onboarding').addEventListener('click', function(e) {
-    // Toca o áudio imediatamente ao clicar
-    audioBoasVindas.play();
     
-    // Opcional: Adiciona um pequeno atraso de 0.5s na transição de página 
-    // apenas para o cliente ouvir o início da frase antes de mudar a tela
-    e.preventDefault();
-    const destino = this.href;
-    setTimeout(() => {
-        window.location.href = destino;
-    }, 500); 
-});
-</script>
 </body>
 
 </html>
+
 
 
 
