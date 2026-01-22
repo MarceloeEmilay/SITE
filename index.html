@@ -156,27 +156,41 @@
     </footer>
     <script>
 document.getElementById('btn-onboarding').addEventListener('click', function(e) {
-    // Não impede o clique, mas inicia a fala imediatamente
     const msg = new SpeechSynthesisUtterance();
-    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário.";
+    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário para configurarmos sua clínica.";
     
-    // Configurações para uma voz mais "Tecnológica e Humana"
+    // Configurações para voz feminina suave
     msg.lang = 'pt-BR';
-    msg.rate = 0.9;  // Um pouco mais lenta para ser elegante
-    msg.pitch = 1.1; // Tom levemente mais agudo para clareza
-    msg.volume = 1;  // Volume máximo
+    msg.rate = 1.0;  // Velocidade natural
+    msg.pitch = 1.2; // Tom um pouco mais agudo (feminino)
     
-    // Tenta selecionar uma voz feminina do sistema se disponível
-    const voices = window.speechSynthesis.getVoices();
-    const googleVoice = voices.find(voice => voice.name.includes('Google') && voice.lang === 'pt-BR');
-    if (googleVoice) msg.voice = googleVoice;
+    // Função para garantir que pegamos a melhor voz feminina disponível
+    const carregarVoz = () => {
+        const voices = window.speechSynthesis.getVoices();
+        // Procura por vozes femininas conhecidas (Google ou Microsoft Maria)
+        const vozFeminina = voices.find(v => 
+            (v.name.includes('Google') || v.name.includes('Maria') || v.name.includes('Francisca')) 
+            && v.lang === 'pt-BR'
+        );
+        
+        if (vozFeminina) {
+            msg.voice = vozFeminina;
+        }
+        window.speechSynthesis.speak(msg);
+    };
 
-    window.speechSynthesis.speak(msg);
+    // Alguns navegadores demoram para carregar as vozes
+    if (window.speechSynthesis.getVoices().length !== 0) {
+        carregarVoz();
+    } else {
+        window.speechSynthesis.onvoiceschanged = carregarVoz;
+    }
 });
 </script>
 </body>
 
 </html>
+
 
 
 
