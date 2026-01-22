@@ -67,6 +67,17 @@
             <a href="/" style="color: #999; text-decoration: none; font-size: 14px;">Voltar para o site</a>
         </div>
     </div>
+    <script>
+window.addEventListener('load', function() {
+    // Adicione os dois pontos e a barra antes de 'static'
+    const audioSucesso = new Audio('../static/sucesso.mp3');
+    
+    audioSucesso.play().catch(e => {
+        console.log("Erro: O navegador não achou o arquivo no caminho ../static/sucesso.mp3");
+    });
+});
+</script>
 </body>
 
 </html>
+
