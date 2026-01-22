@@ -105,7 +105,7 @@
                     <h1>A evolução digital da sua clínica começa aqui.</h1>
                     <p>Sistemas inteligentes de gestão e monitoramento para clínicas que buscam excelência e alta performance tecnológica.</p>
                     <div class="d-flex gap-3">
-                        <a href="/onboarding.html" onclick="falarBoasVindas()" class="btn-onboarding">Iniciar Onboarding</a>
+                        <a href="/onboarding.html" id="btn-onboarding" class="btn-onboarding">Iniciar Onboarding</a>
                         <a href="#solucoes" class="btn btn-link text-white text-decoration-none fw-600">Conheça nossas soluções <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
@@ -155,22 +155,27 @@
         </div>
     </footer>
     <script>
-function falarBoasVindas() {
-    // Cria a mensagem
-    const mensagem = new SpeechSynthesisUtterance("Obrigado por escolher a New Screen. Por favor, preencha o formulário para iniciarmos sua configuração.");
+document.getElementById('btn-onboarding').addEventListener('click', function(e) {
+    // Não impede o clique, mas inicia a fala imediatamente
+    const msg = new SpeechSynthesisUtterance();
+    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário.";
+    
+    // Configurações para uma voz mais "Tecnológica e Humana"
+    msg.lang = 'pt-BR';
+    msg.rate = 0.9;  // Um pouco mais lenta para ser elegante
+    msg.pitch = 1.1; // Tom levemente mais agudo para clareza
+    msg.volume = 1;  // Volume máximo
+    
+    // Tenta selecionar uma voz feminina do sistema se disponível
+    const voices = window.speechSynthesis.getVoices();
+    const googleVoice = voices.find(voice => voice.name.includes('Google') && voice.lang === 'pt-BR');
+    if (googleVoice) msg.voice = googleVoice;
 
-    // Define o idioma para Português do Brasil
-    mensagem.lang = 'pt-BR';
-
-    // Ajusta a velocidade (1.0 é o normal)
-    mensagem.rate = 1.1; 
-
-    // Executa a fala
-    window.speechSynthesis.speak(mensagem);
-}
+    window.speechSynthesis.speak(msg);
+});
 </script>
-
 </body>
 
 </html>
+
 
