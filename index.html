@@ -105,7 +105,7 @@
                     <h1>A evolução digital da sua clínica começa aqui.</h1>
                     <p>Sistemas inteligentes de gestão e monitoramento para clínicas que buscam excelência e alta performance tecnológica.</p>
                     <div class="d-flex gap-3">
-                        <a href="/onboarding" class="btn-primary-custom">Iniciar Onboarding</a>
+                        <a href="/onboarding.html" onclick="falarBoasVindas()" class="btn-onboarding">Iniciar Onboarding</a>
                         <a href="#solucoes" class="btn btn-link text-white text-decoration-none fw-600">Conheça nossas soluções <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
@@ -154,7 +154,23 @@
             <p>&copy; 2026 Sistemas New Screen. Todos os direitos reservados. <br> Tecnologia em Saúde sob medida.</p>
         </div>
     </footer>
+    <script>
+function falarBoasVindas() {
+    // Cria a mensagem
+    const mensagem = new SpeechSynthesisUtterance("Obrigado por escolher a New Screen. Por favor, preencha o formulário para iniciarmos sua configuração.");
+
+    // Define o idioma para Português do Brasil
+    mensagem.lang = 'pt-BR';
+
+    // Ajusta a velocidade (1.0 é o normal)
+    mensagem.rate = 1.1; 
+
+    // Executa a fala
+    window.speechSynthesis.speak(mensagem);
+}
+</script>
 
 </body>
 
 </html>
+
