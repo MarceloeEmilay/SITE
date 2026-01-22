@@ -156,40 +156,41 @@
     </footer>
     <script>
 document.getElementById('btn-onboarding').addEventListener('click', function(e) {
+    // Cancela qualquer fala anterior para não sobrepor e tremer
+    window.speechSynthesis.cancel();
+
     const msg = new SpeechSynthesisUtterance();
-    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário para configurarmos sua clínica.";
+    msg.text = "Obrigado por escolher a New Screen. Por favor, preencha o formulário.";
     
-    // Configurações para voz feminina suave
+    // Configurações de Estabilidade
     msg.lang = 'pt-BR';
-    msg.rate = 1.0;  // Velocidade natural
-    msg.pitch = 1.2; // Tom um pouco mais agudo (feminino)
-    
-    // Função para garantir que pegamos a melhor voz feminina disponível
-    const carregarVoz = () => {
+    msg.rate = 0.85; // Velocidade levemente reduzida remove o efeito tremido
+    msg.pitch = 1.0; // Tom neutro para parecer mais humana e menos robótica
+    msg.volume = 1.0;
+
+    const carregarVozPerfeita = () => {
         const voices = window.speechSynthesis.getVoices();
-        // Procura por vozes femininas conhecidas (Google ou Microsoft Maria)
-        const vozFeminina = voices.find(v => 
-            (v.name.includes('Google') || v.name.includes('Maria') || v.name.includes('Francisca')) 
-            && v.lang === 'pt-BR'
-        );
+        // Prioridade 1: Voz do Google (Mais natural) | Prioridade 2: Maria (Microsoft)
+        const melhorVoz = voices.find(v => v.name.includes('Google') && v.lang === 'pt-BR') || 
+                          voices.find(v => v.name.includes('Maria') && v.lang === 'pt-BR');
         
-        if (vozFeminina) {
-            msg.voice = vozFeminina;
+        if (melhorVoz) {
+            msg.voice = melhorVoz;
         }
+        
         window.speechSynthesis.speak(msg);
     };
 
-    // Alguns navegadores demoram para carregar as vozes
-    if (window.speechSynthesis.getVoices().length !== 0) {
-        carregarVoz();
-    } else {
-        window.speechSynthesis.onvoiceschanged = carregarVoz;
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = carregarVozPerfeita;
     }
+    carregarVozPerfeita();
 });
 </script>
 </body>
 
 </html>
+
 
 
 
