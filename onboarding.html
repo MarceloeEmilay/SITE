@@ -3,156 +3,870 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onboarding | Sistemas New Screen</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Onboarding | New Screen - Configure sua Clínica</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #000C66;
             --accent: #00B0FF;
-            --bg: #f4f7f9;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --bg: #f8f9fa;
+            --dark: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        .onboarding-container {
-            background: white;
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--primary);
-        }
-
-        .header { text-align: center; margin-bottom: 30px; }
-        .header img { height: 50px; margin-bottom: 10px; }
-        .header h2 { color: var(--primary); margin: 0; font-size: 24px; }
-
-        fieldset {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 20px;
-        }
-
-        legend {
-            font-weight: bold;
-            color: var(--primary);
-            padding: 0 10px;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        input[type="text"], input[type="email"], input[type="tel"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        .aviso-whatsapp {
-            background-color: #f8f9fa;
-            border: 1px dashed #25D366;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 0.9em;
-        }
-
-        .consentimento {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ========== CONTAINER PRINCIPAL ========== */
+        .onboarding-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== HEADER ========== */
+        .onboarding-header {
+            background: linear-gradient(135deg, var(--primary), #001a4d);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .onboarding-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-container {
+            background: #e5e7eb;
+            height: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #00f2fe);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 40px 0;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 10px;
-            background: #eef7ff;
-            padding: 15px;
-            border-radius: 8px;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #9ca3af;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step.active .step-circle {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 4px rgba(0, 176, 255, 0.2);
+        }
+
+        .step.completed .step-circle {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .step.active .step-label {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ========== FORM CONTAINER ========== */
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        /* ========== FORM GROUPS ========== */
+        .form-group {
             margin-bottom: 25px;
         }
 
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            padding: 18px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
 
-        button:hover { background-color: var(--accent); }
+        .required {
+            color: var(--error);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(0, 176, 255, 0.1);
+        }
+
+        .form-input.valid {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .form-input.invalid {
+            border-color: var(--error);
+            background: #fef2f2;
+        }
+
+        .validation-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .form-input.valid ~ .validation-icon.check {
+            opacity: 1;
+            color: var(--success);
+        }
+
+        .form-input.invalid ~ .validation-icon.times {
+            opacity: 1;
+            color: var(--error);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .form-input.invalid ~ .error-message {
+            display: block;
+        }
+
+        /* ========== CHECKBOX CUSTOM ========== */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-wrapper:hover {
+            border-color: var(--accent);
+            background: #f0f9ff;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        /* ========== ALERT BOX ========== */
+        .alert-box {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+
+        /* ========== BUTTONS ========== */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #000a52;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 12, 102, 0.2);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ========== FOOTER ========== */
+        .onboarding-footer {
+            background: #f8fafc;
+            padding: 20px 40px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .onboarding-header {
+                padding: 30px 20px;
+            }
+
+            .header-title {
+                font-size: 1.4rem;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .progress-steps {
+                padding: 20px 20px 0;
+            }
+
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            .step-label {
+                font-size: 0.75rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="onboarding-container">
-    <div class="header">
-        <img src="static/logo.png" alt="Logo">
-        <h2>Configuração de Nova Clínica</h2>
-        <p>Preencha os dados abaixo para a instalação.</p>
+    <div class="onboarding-wrapper">
+        <!-- HEADER -->
+        <div class="onboarding-header">
+            <div class="header-content">
+                <img src="static/logo.png" alt="New Screen" class="logo">
+                <h1 class="header-title">Configuração de Nova Clínica</h1>
+                <p class="header-subtitle">Preencha as informações para começar sua jornada digital</p>
+            </div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- PROGRESS STEPS -->
+        <div class="progress-steps">
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
+                <span class="step-label">Identificação</span>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
+                <span class="step-label">Contato</span>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <span class="step-label">Confirmação</span>
+            </div>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <form id="onboardingForm" name="onboarding-clinica" method="POST" data-netlify="true" action="/sucesso.html">
+            <div class="form-container">
+                
+                <!-- STEP 1: IDENTIFICAÇÃO -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="step-title">Identificação da Clínica</h2>
+                    <p class="step-description">Informe os dados básicos da sua instituição</p>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Nome da Clínica <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-hospital input-icon"></i>
+                            <input 
+                                type="text" 
+                                name="nome_clinica" 
+                                class="form-input" 
+                                placeholder="Ex: Clínica Bem Estar"
+                                required
+                                data-validate="text"
+                            >
+                            <i class="fas fa-check validation-icon check"></i>
+                            <i class="fas fa-times validation-icon times"></i>
+                        </div>
+                        <div class="error-message">Por favor, informe o nome da clínica</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            CNPJ <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-building input-icon"></i>
+                            <input 
+                                type="text" 
+                                name="cnpj" 
+                                class="form-input" 
+                                placeholder="00.000.000/0000-00"
+                                required
+                                data-validate="cnpj"
+                                maxlength="18"
+                            >
+                            <i class="fas fa-check validation-icon check"></i>
+                            <i class="fas fa-times validation-icon times"></i>
+                        </div>
+                        <div class="error-message">CNPJ inválido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Endereço Completo <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt input-icon"></i>
+                            <input 
+                                type="text" 
+                                name="endereco" 
+                                class="form-input" 
+                                placeholder="Rua, número, bairro, cidade - UF"
+                                required
+                                data-validate="text"
+                            >
+                            <i class="fas fa-check validation-icon check"></i>
+                            <i class="fas fa-times validation-icon times"></i>
+                        </div>
+                        <div class="error-message">Por favor, informe o endereço completo</div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: CONTATO -->
+                <div class="form-step" data-step="2">
+                    <h2 class="step-title">Contato e Notificações</h2>
+                    <p class="step-description">Como podemos nos comunicar com você</p>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            E-mail do Proprietário <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input 
+                                type="email" 
+                                name="email_proprietario" 
+                                class="form-input" 
+                                placeholder="seuemail@clinica.com.br"
+                                required
+                                data-validate="email"
+                            >
+                            <i class="fas fa-check validation-icon check"></i>
+                            <i class="fas fa-times validation-icon times"></i>
+                        </div>
+                        <div class="error-message">E-mail inválido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            WhatsApp / Telefone <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fab fa-whatsapp input-icon"></i>
+                            <input 
+                                type="tel" 
+                                name="whatsapp" 
+                                class="form-input" 
+                                placeholder="(00) 00000-0000"
+                                required
+                                data-validate="phone"
+                                maxlength="15"
+                            >
+                            <i class="fas fa-check validation-icon check"></i>
+                            <i class="fas fa-times validation-icon times"></i>
+                        </div>
+                        <div class="error-message">Telefone inválido</div>
+                    </div>
+
+                    <div class="alert-box alert-warning">
+                        <i class="fab fa-whatsapp alert-icon"></i>
+                        <div>
+                            <strong>Próximo Passo:</strong> Após o envio, você será redirecionado para nosso WhatsApp <strong>(74) 98105-9128</strong> para envio das fotos da clínica (logo e fachada).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: CONFIRMAÇÃO -->
+                <div class="form-step" data-step="3">
+                    <h2 class="step-title">Confirmação e Termos</h2>
+                    <p class="step-description">Revise suas informações antes de enviar</p>
+
+                    <div class="alert-box alert-info">
+                        <i class="fas fa-info-circle alert-icon"></i>
+                        <div>
+                            <strong>Quase lá!</strong> Verifique se todos os dados estão corretos. Após o envio, você receberá as credenciais de acesso em até 24 horas.
+                        </div>
+                    </div>
+
+                    <div id="reviewData" style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <!-- Dados serão inseridos aqui via JavaScript -->
+                    </div>
+
+                    <div class="checkbox-wrapper">
+                        <input 
+                            type="checkbox" 
+                            id="permissao" 
+                            name="permissao_email" 
+                            required
+                        >
+                        <label class="checkbox-label" for="permissao">
+                            <strong>Autorizo a criação de um e-mail técnico</strong> para envio automático de relatórios financeiros, lembretes e notificações do sistema. Este e-mail será gerenciado pela equipe New Screen.
+                        </label>
+                    </div>
+
+                    <div class="checkbox-wrapper">
+                        <input 
+                            type="checkbox" 
+                            id="termos" 
+                            required
+                        >
+                        <label class="checkbox-label" for="termos">
+                            Li e aceito os <a href="#" class="footer-link">Termos de Uso</a> e a <a href="#" class="footer-link">Política de Privacidade</a> da New Screen.
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOTÕES DE NAVEGAÇÃO -->
+            <div class="form-container" style="padding-top: 0;">
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">
+                        Próximo <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
+                        Finalizar Cadastro <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- FOOTER -->
+        <div class="onboarding-footer">
+            <p class="footer-text">
+                Precisa de ajuda? <a href="https://wa.me/5574981059128" class="footer-link">Fale conosco no WhatsApp</a>
+            </p>
+        </div>
     </div>
-    
-    <form name="onboarding-clinica" method="POST" data-netlify="true" action="/sucesso/">
-        
-        <fieldset>
-            <legend><i class="fas fa-hospital"></i> Identificação</legend>
-            <input type="text" name="nome_clinica" placeholder="Nome da Clínica" required>
-            <input type="text" name="cnpj" placeholder="CNPJ" required>
-            <input type="text" name="endereco" placeholder="Endereço Completo" required>
-        </fieldset>
 
-        <fieldset>
-            <legend><i class="fas fa-envelope"></i> Contato e Notificações</legend>
-            <input type="email" name="email_proprietario" placeholder="E-mail do Proprietário" required>
-            <input type="tel" name="whatsapp" placeholder="WhatsApp / Telefone" required>
-        </fieldset>
+    <script>
+        // ========== VARIÁVEIS GLOBAIS ==========
+        let currentStep = 1;
+        const totalSteps = 3;
+        const formData = {};
 
-        <div class="aviso-whatsapp">
-            <i class="fab fa-whatsapp" style="color: #25D366;"></i> 
-            As fotos da clínica serão solicitadas no número <b>(74) 98105-9128</b> após o envio deste formulário.
-        </div>
+        // ========== MÁSCARAS DE INPUT ==========
+        function maskCNPJ(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/^(\d{2})(\d)/, '$1.$2')
+                .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+                .replace(/\.(\d{3})(\d)/, '.$1/$2')
+                .replace(/(\d{4})(\d)/, '$1-$2')
+                .substring(0, 18);
+        }
 
-        <div class="consentimento">
-            <input type="checkbox" id="permissao" name="permissao_email" required>
-            <label for="permissao" style="font-size: 13px;">Autorizo a criação de um e-mail técnico para envio automático de relatórios.</label>
-        </div>
+        function maskPhone(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/^(\d{2})(\d)/, '($1) $2')
+                .replace(/(\d{5})(\d)/, '$1-$2')
+                .substring(0, 15);
+        }
 
-        <button type="submit">FINALIZAR E ENVIAR DADOS <i class="fas fa-arrow-right"></i></button>
-    </form>
-</div>
-<script>
-window.addEventListener('load', function() {
-    const audio = new Audio('static/boas-vindas.mp3');
-    // Os navegadores bloqueiam som automático, mas como o usuário 
-    // veio de um clique no botão anterior, ele costuma permitir.
-    audio.play().catch(error => {
-        console.log("O navegador bloqueou o áudio automático. Ele tocará na próxima interação.");
-    });
-});
-</script>
+        // ========== VALIDAÇÃO ==========
+        function validateField(input) {
+            const value = input.value.trim();
+            const type = input.getAttribute('data-validate');
+            let isValid = false;
+
+            if (type === 'text') {
+                isValid = value.length >= 3;
+            } else if (type === 'cnpj') {
+                isValid = value.replace(/\D/g, '').length === 14;
+            } else if (type === 'email') {
+                isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            } else if (type === 'phone') {
+                isValid = value.replace(/\D/g, '').length >= 10;
+            }
+
+            if (isValid) {
+                input.classList.remove('invalid');
+                input.classList.add('valid');
+            } else if (value.length > 0) {
+                input.classList.remove('valid');
+                input.classList.add('invalid');
+            } else {
+                input.classList.remove('valid', 'invalid');
+            }
+
+            return isValid;
+        }
+
+        // ========== APLICAR MÁSCARAS ==========
+        document.querySelectorAll('input[data-validate="cnpj"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                e.target.value = maskCNPJ(e.target.value);
+                validateField(e.target);
+            });
+        });
+
+        document.querySelectorAll('input[data-validate="phone"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                e.target.value = maskPhone(e.target.value);
+                validateField(e.target);
+            });
+        });
+
+        // Validação em tempo real para todos os campos
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+            input.addEventListener('input', () => {
+                if (input.classList.contains('invalid') || input.classList.contains('valid')) {
+                    validateField(input);
+                }
+            });
+        });
+
+        // ========== NAVEGAÇÃO ENTRE STEPS ==========
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Atualizar círculos dos steps
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNum = index + 1;
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+
+            // Atualizar visibilidade dos steps do formulário
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
+
+            // Atualizar botões
+            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
+        }
+
+        function validateCurrentStep() {
+            const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            const inputs = currentStepElement.querySelectorAll('.form-input[required]');
+            let allValid = true;
+
+            inputs.forEach(input => {
+                if (!validateField(input)) {
+                    allValid = false;
+                }
+            });
+
+            return allValid;
+        }
+
+        function saveStepData() {
+            const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            const inputs = currentStepElement.querySelectorAll('.form-input');
+            
+            inputs.forEach(input => {
+                formData[input.name] = input.value;
+            });
+        }
+
+        function showReviewData() {
+            const reviewDiv = document.getElementById('reviewData');
+            reviewDiv.innerHTML = `
+                <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.1rem;">📋 Dados Informados:</h3>
+                <div style="display: grid; gap: 12px;">
+                    <div><strong>Clínica:</strong> ${formData.nome_clinica || 'Não informado'}</div>
+                    <div><strong>CNPJ:</strong> ${formData.cnpj || 'Não informado'}</div>
+                    <div><strong>Endereço:</strong> ${formData.endereco || 'Não informado'}</div>
+                    <div><strong>E-mail:</strong> ${formData.email_proprietario || 'Não informado'}</div>
+                    <div><strong>WhatsApp:</strong> ${formData.whatsapp || 'Não informado'}</div>
+                </div>
+            `;
+        }
+
+        // ========== EVENT LISTENERS DOS BOTÕES ==========
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (validateCurrentStep()) {
+                saveStepData();
+                if (currentStep === 2) {
+                    showReviewData();
+                }
+                currentStep++;
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentStep--;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========== ENVIO DO FORMULÁRIO ==========
+        document.getElementById('onboardingForm').addEventListener('submit', (e) => {
+            if (!document.getElementById('permissao').checked || !document.getElementById('termos').checked) {
+                e.preventDefault();
+                alert('Por favor, aceite os termos para continuar.');
+            }
+        });
+
+        // ========== ÁUDIO DE BOAS-VINDAS ==========
+        window.addEventListener('load', () => {
+            const audio = new Audio('static/boas-vindas.mp3');
+            audio.play().catch(() => {
+                console.log('Áudio bloqueado pelo navegador');
+            });
+        });
+
+        // Inicializar
+        updateProgress();
+    </script>
+
 </body>
-
 </html>
-
-
-
-
-
-
-
