@@ -3,171 +3,825 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistemas New Screen | Tecnologia em Saúde</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>New Screen | Sistemas Inteligentes para Clínicas</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #000C66; /* Azul marinho */
-            --accent: #00B0FF;  /* Azul claro */
+            --primary: #000C66;
+            --accent: #00B0FF;
             --dark: #0a0a0a;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #000C66 0%, #001a4d 100%);
         }
 
-        body { font-family: 'Inter', sans-serif; color: #333; overflow-x: hidden; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Navbar */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            background: white;
+        }
+
+        /* ========== NAVBAR FLUTUANTE ========== */
         .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #eee;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             padding: 15px 0;
         }
 
-        /* Seção Hero */
-        .hero {
-            padding: 120px 0 80px;
-            background: radial-gradient(circle at top right, #001a4d, var(--primary));
-            color: white;
-            min-height: 80vh;
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .hero h1 { font-weight: 800; font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; }
-        .hero p { font-size: 1.2rem; color: #b0c4de; margin-bottom: 35px; max-width: 600px; }
-
-        .btn-primary-custom {
-            background-color: var(--accent);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-            display: inline-block;
-            border: none;
+        .logo img {
+            height: 45px;
+            transition: transform 0.3s;
         }
 
-        .btn-primary-custom:hover {
-            background-color: white;
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: var(--dark);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn-login {
+            background: white;
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled .btn-login {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 12, 102, 0.2);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgba(0,176,255,0.1)"/><stop offset="100%" style="stop-color:rgba(0,176,255,0)"/></linearGradient></defs><circle cx="200" cy="100" r="300" fill="url(%23grad)"/><circle cx="1000" cy="500" r="400" fill="url(%23grad)"/></svg>');
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(90deg, var(--accent), #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 176, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: white;
             color: var(--primary);
             transform: translateY(-3px);
         }
 
-        /* Cards de Soluções Formatados */
-        .feature-card {
-            padding: 40px 20px;
+        /* ========== HERO VISUAL ========== */
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .dashboard-mockup {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mockup-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mockup-icon {
+            font-size: 8rem;
+            opacity: 0.2;
+        }
+
+        /* ========== STATS SECTION ========== */
+        .stats {
             background: white;
-            border: 1px solid #f0f0f0;
-            transition: 0.3s;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .stats .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* ========== FEATURES SECTION ========== */
+        .features {
+            padding: 120px 0;
+            background: var(--light);
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s;
+        }
+
+        .feature-card:hover::before {
             height: 100%;
-            text-align: center; /* Centralização garantida */
         }
 
         .feature-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 12, 102, 0.1);
             border-color: var(--accent);
-            transform: translateY(-5px);
         }
 
-        .icon-box {
+        .feature-icon {
             width: 70px;
             height: 70px;
-            background: #eef7ff;
-            color: var(--accent);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin: 0 auto 25px; /* Centraliza o box do ícone */
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: var(--accent);
+            transition: all 0.3s;
         }
 
-        footer { background: var(--dark); color: #666; padding: 40px 0; font-size: 0.9rem; }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta {
+            padding: 100px 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 176, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .cta .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--dark);
+            color: #666;
+            padding: 60px 0 30px;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #222;
+            padding-top: 30px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar sticky-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="#">
-                <img src="static/logo.png" alt="New Screen" style="height: 45px;">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="static/logo.png" alt="New Screen">
             </a>
-            <a href="/onboarding.html" class="btn btn-outline-primary rounded-pill px-4" style="border-color: var(--primary); color: var(--primary); font-weight: 600;">Acesso Cliente</a>
+            <div class="nav-links">
+                <a href="#solucoes">Soluções</a>
+                <a href="#funcionalidades">Funcionalidades</a>
+                <a href="onboarding.html" class="btn-login">Começar Agora</a>
+            </div>
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <h1>A evolução digital da sua clínica começa aqui.</h1>
-                    <p>Sistemas inteligentes de gestão e monitoramento para clínicas que buscam excelência e alta performance tecnológica.</p>
-                    <div class="d-flex gap-3">
-                        <a href="/onboarding.html" class="btn-primary-custom">Onboarding</a>
-                        <a href="#solucoes" class="btn btn-link text-white text-decoration-none fw-600">Conheça nossas soluções <i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-5 d-none d-lg-block text-center">
-                    <i class="fas fa-laptop-medical" style="font-size: 15rem; color: rgba(255,255,255,0.1);"></i>
+            <div class="hero-content">
+                <h1>A <span>evolução digital</span> da sua clínica começa aqui.</h1>
+                <p>Sistema completo de gestão clínica com tecnologia de ponta: agendamentos inteligentes, controle financeiro automático, documentos clínicos digitais e muito mais.</p>
+                <div class="hero-buttons">
+                    <a href="onboarding.html" class="btn-primary">
+                        Começar Gratuitamente <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#funcionalidades" class="btn-secondary">
+                        Conhecer Recursos
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="solucoes" class="py-5">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h6 class="text-primary text-uppercase fw-bold">Ecossistema Inteligente</h6>
-                <h2 class="display-5 fw-bold" style="color: var(--primary);">Módulos feitos para alta performance.</h2>
-                <p class="text-muted">Gestão completa e integrada conforme as necessidades da sua clínica.</p>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-clock-rotate-left"></i></div>
-                        <h5 class="fw-bold">Fila de Espera</h5>
-                        <p class="small text-muted">Gestão de fluxo em tempo real com triagem e status de atendimento dinâmicos.</p>
+            <div class="hero-visual">
+                <div class="dashboard-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-dot"></div>
+                        <div class="mockup-dot"></div>
+                        <div class="mockup-dot"></div>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-notes-medical"></i></div>
-                        <h5 class="fw-bold">Documentos Clínicos</h5>
-                        <p class="small text-muted">Prontuários e históricos digitais centralizados com total segurança de dados.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-file-invoice-dollar"></i></div>
-                        <h5 class="fw-bold">Gestão Financeira</h5>
-                        <p class="small text-muted">Controle de faturamento, fluxo de caixa e suporte a múltiplos métodos de pagamento.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-tv"></i></div>
-                        <h5 class="fw-bold">Marketing Indoor</h5>
-                        <p class="small text-muted">Gestão de conteúdos MP4 e imagens para salas de espera com atualização instantânea.</p>
+                    <div class="mockup-content">
+                        <i class="fas fa-laptop-medical mockup-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-card reveal">
+                <div class="stat-number">17+</div>
+                <div class="stat-label">Módulos Integrados</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Baseado em Nuvem</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Suporte Técnico</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">LGPD</div>
+                <div class="stat-label">Conformidade Total</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="funcionalidades">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">Ecossistema Completo</div>
+                <h2 class="section-title">Tudo que sua clínica precisa em um só lugar</h2>
+                <p class="section-description">Sistema modular e escalável que cresce junto com seu negócio</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Agendamentos Inteligentes</h3>
+                    <p class="feature-description">Sistema completo com priorização automática, lembretes por WhatsApp e integração com pagamento online.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Controle de Fila</h3>
+                    <p class="feature-description">Painel de chamadas em tempo real com sistema de prioridade visual para idosos e gestantes.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3 class="feature-title">Prontuários Digitais</h3>
+                    <p class="feature-description">Anamnese dinâmica customizável, receituários, atestados e histórico completo do paciente.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Gestão Financeira</h3>
+                    <p class="feature-description">Controle de caixa automático, fechamento diário, estorno auditado e relatórios detalhados.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Cadastro de Pacientes</h3>
+                    <p class="feature-description">Base completa com aniversariantes do mês, histórico de consultas e link direto para WhatsApp.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 class="feature-title">Marketing Indoor</h3>
+                    <p class="feature-description">Painel de TV para sala de espera com carrossel de imagens e vídeos personalizados.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Permissões Granulares</h3>
+                    <p class="feature-description">Controle total de acesso por usuário com 7 níveis de permissão configuráveis.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="feature-title">Notificações Automáticas</h3>
+                    <p class="feature-description">Envio automático de relatórios por email e lembretes de consulta via WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para revolucionar sua clínica?</h2>
+            <p>Comece gratuitamente e veja como a tecnologia pode transformar sua gestão</p>
+            <a href="onboarding.html" class="btn-primary" style="font-size: 1.1rem; padding: 20px 50px;">
+                Iniciar Teste Grátis <i class="fas fa-rocket"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
-        <div class="container text-center">
-            <img src="static/logo.png" alt="New Screen" style="height: 30px; filter: grayscale(1) brightness(2); margin-bottom: 20px; opacity: 0.5;">
-            <p>&copy; 2026 Sistemas New Screen. Todos os direitos reservados. <br> Tecnologia em Saúde sob medida.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="static/logo.png" alt="New Screen">
+                    <p>Sistemas inteligentes para gestão de clínicas médicas, odontológicas e multidisciplinares.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Produto</h4>
+                    <ul class="footer-links">
+                        <li><a href="#funcionalidades">Funcionalidades</a></li>
+                        <li><a href="#solucoes">Soluções</a></li>
+                        <li><a href="#">Preços</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Empresa</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Carreira</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Suporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Documentação</a></li>
+                        <li><a href="#">Status do Sistema</a></li>
+                        <li><a href="#">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 New Screen. Todos os direitos reservados. | CNPJ: XX.XXX.XXX/XXXX-XX</p>
+            </div>
         </div>
     </footer>
-    
+
+    <script>
+        // NAVBAR SCROLL
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // REVEAL ANIMATIONS
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Executa ao carregar
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
