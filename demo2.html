@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Sistema - Clínica Saúde+</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* ========== LAYOUT BASE (COPIADO DO SEU SISTEMA) ========== */
+        body { 
+            margin:0; 
+            font-family:'Inter',sans-serif; 
+            background:#F8F4FF; 
+            display:flex; 
+            flex-direction:column; 
+            min-height:100vh; 
+        }
+        
+        .sidebar { 
+            background:#3f017d; 
+            color:#fff; 
+            width:60px; 
+            height:100vh; 
+            transition:width .3s ease; 
+            overflow:hidden; 
+            position:fixed; 
+            z-index: 1000; 
+        }
+        
+        .sidebar:hover { width:250px; }
+        
+        .sidebar .logo { 
+            text-align:center; 
+            padding:20px 0; 
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        .sidebar ul { 
+            list-style:none; 
+            padding:0; 
+            margin-top:20px; 
+        }
+        
+        .sidebar li { 
+            display:flex; 
+            align-items:center; 
+            padding:12px 20px; 
+            white-space:nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sidebar li:hover { 
+            background:rgba(255,255,255,0.1);
+        }
+        
+        .sidebar li.active {
+            background:rgba(255,255,255,0.15);
+            border-left: 3px solid #00B0FF;
+        }
+        
+        .sidebar i { 
+            margin-right:15px; 
+            font-size:18px; 
+            min-width:20px; 
+            text-align:center; 
+        }
+        
+        .sidebar .label { 
+            opacity:0; 
+            transition:opacity .3s ease; 
+        }
+        
+        .sidebar:hover .label { 
+            opacity:1; 
+        }
+
+        .content { 
+            margin-left:60px; 
+            padding:35px; 
+            flex-grow:1; 
+            transition:margin-left .3s ease; 
+        }
+
+        /* ========== COMPONENTES DO SISTEMA ========== */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards de Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .stat-icon.blue { background: #00B0FF; }
+        .stat-icon.purple { background: #6f42c1; }
+        .stat-icon.green { background: #25D366; }
+        .stat-icon.yellow { background: #ffc107; }
+        .stat-icon.red { background: #ff4444; }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #3f017d;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Tabelas */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #3f017d;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8f9fe;
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #f8f9fe;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.info { background: #e3f2fd; color: #1976d2; }
+        .badge.success { background: #e8f5e9; color: #388e3c; }
+        .badge.warning { background: #fff9c4; color: #f57f17; }
+        .badge.danger { background: #ffebee; color: #c62828; }
+
+        /* Botões */
+        .btn-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 3px;
+        }
+
+        .btn-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-circle.blue { background: #00B0FF; color: white; }
+        .btn-circle.green { background: #25D366; color: white; }
+        .btn-circle.purple { background: #6f42c1; color: white; }
+        .btn-circle.red { background: #ff4444; color: white; }
+
+        /* Fila de Atendimento */
+        .queue-item {
+            background: white;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+        }
+
+        .queue-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        }
+
+        .queue-item.aguardando { border-left-color: #cbd5e0; }
+        .queue-item.chamado { border-left-color: #00B0FF; background: #f0f9ff; }
+        .queue-item.prioridade { border-left-color: #ffc107; background: #fffbf0; }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .status-dot.aguardando { background: #cbd5e0; }
+        .status-dot.chamado { background: #00B0FF; }
+        .status-dot.atendido { background: #25D366; }
+
+        .patient-details h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #3f017d;
+            margin-bottom: 4px;
+        }
+
+        .patient-details p {
+            font-size: 0.85rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Search Box */
+        .search-box {
+            padding: 10px 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: 300px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #00B0FF;
+        }
+
+        /* Forms */
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 700px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #3f017d;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Chart */
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, #00B0FF, #3f017d);
+            border-radius: 8px 8px 0 0;
+            transition: all 0.5s ease;
+        }
+
+        .bar-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        @media (max-width:768px) {
+            .sidebar { 
+                width: 100%; 
+                height: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            
+            .sidebar:hover { width: 100%; }
+            .sidebar .label { display: none; }
+            .content { margin-left: 0; padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+    <div class="logo">
+        <i class="fas fa-clinic-medical"></i>
+    </div>
+    <ul>
+        <li class="active" data-page="dashboard">
+            <i class="fas fa-home"></i>
+            <span class="label"><strong>Início</strong></span>
+        </li>
+        <li data-page="controle">
+            <i class="fas fa-list"></i>
+            <span class="label"><strong>Controle</strong></span>
+        </li>
+        <li data-page="agendar">
+            <i class="fas fa-calendar-plus"></i>
+            <span class="label"><strong>Agendar</strong></span>
+        </li>
+        <li data-page="clientes">
+            <i class="fas fa-address-book"></i>
+            <span class="label"><strong>Pacientes</strong></span>
+        </li>
+        <li data-page="documentos">
+            <i class="fas fa-file-medical"></i>
+            <span class="label"><strong>Documentos</strong></span>
+        </li>
+        <li data-page="financeiro">
+            <i class="fas fa-dollar-sign"></i>
+            <span class="label"><strong>Financeiro</strong></span>
+        </li>
+        <li data-page="relatorios">
+            <i class="fas fa-chart-bar"></i>
+            <span class="label"><strong>Relatórios</strong></span>
+        </li>
+    </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+    <!-- ========== PÁGINA: DASHBOARD ========== -->
+    <div id="page-dashboard" class="page-content active">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-home" style="margin-right: 10px;"></i>
+            Dashboard - Visão Geral
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Agendamentos Hoje</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="stat-value">23</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> +3 em relação a ontem
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Na Fila de Espera</span>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-change">
+                    <i class="fas fa-users"></i> Aguardando
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Atendidos Hoje</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-value">15</div>
+                <div class="stat-change">
+                    <i class="fas fa-check"></i> Concluídos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Faturamento Hoje</span>
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 4.250</div>
+                <div class="stat-change">
+                    <i class="fas fa-money-bill-wave"></i> Receita
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Atendimentos da Semana</h3>
+            </div>
+            <div class="chart-container">
+                <div class="bar-item">
+                    <div class="bar" style="height: 70%;"></div>
+                    <div class="bar-label">Seg</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 85%;"></div>
+                    <div class="bar-label">Ter</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar-label">Qua</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 90%;"></div>
+                    <div class="bar-label">Qui</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 75%;"></div>
+                    <div class="bar-label">Sex</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 40%;"></div>
+                    <div class="bar-label">Sáb</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Atividade Recente</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Horário</th>
+                        <th>Paciente</th>
+                        <th>Ação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14:32</td>
+                        <td>Maria Silva</td>
+                        <td>Check-in realizado</td>
+                        <td><span class="badge info">Aguardando</span></td>
+                    </tr>
+                    <tr>
+                        <td>14:15</td>
+                        <td>João Santos</td>
+                        <td>Atendimento concluído</td>
+                        <td><span class="badge success">Concluído</span></td>
+                    </tr>
+                    <tr>
+                        <td>13:58</td>
+                        <td>Ana Costa</td>
+                        <td>Paciente chamado</td>
+                        <td><span class="badge warning">Em atendimento</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: CONTROLE ========== -->
+    <div id="page-controle" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-list" style="margin-right: 10px;"></i>
+            Controle de Atendimento
+        </h1>
+
+        <div class="table-container" style="margin-bottom: 30px;">
+            <div class="table-header">
+                <h3 class="table-title">Fila de Espera - Pendentes</h3>
+            </div>
+            <div style="padding: 20px;">
+                <div class="queue-item aguardando">
+                    <div class="patient-info">
+                        <div class="status-dot aguardando"></div>
+                        <div class="patient-details">
+                            <h4>Maria Silva</h4>
+                            <p>14:30 • Consulta • Consultório 1</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="queue-item prioridade">
+                    <div class="patient-info">
+                        <div class="status-dot chamado"></div>
+                        <div class="patient-details">
+                            <h4><i class="fas fa-star" style="color: #ffc107; margin-right: 5px;"></i>José Almeida (Prioritário)</h4>
+                            <p>14:45 • Retorno • Consultório 2</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="queue-item aguardando">
+                    <div class="patient-info">
+                        <div class="status-dot aguardando"></div>
+                        <div class="patient-details">
+                            <h4>Paulo Roberto</h4>
+                            <p>15:00 • Procedimento • Consultório 1</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Concluídos Hoje</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Horário</th>
+                        <th>Serviço</th>
+                        <th>Consultório</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>João Santos</td>
+                        <td>14:15</td>
+                        <td>Consulta</td>
+                        <td>Consultório 1</td>
+                    </tr>
+                    <tr>
+                        <td>Carlos Oliveira</td>
+                        <td>13:45</td>
+                        <td>Retorno</td>
+                        <td>Consultório 2</td>
+                    </tr>
+                    <tr>
+                        <td>Ana Paula</td>
+                        <td>13:20</td>
+                        <td>Avaliação</td>
+                        <td>Consultório 1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: AGENDAR ========== -->
+    <div id="page-agendar" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-calendar-plus" style="margin-right: 10px;"></i>
+            Agendar Atendimento
+        </h1>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>Buscar/Selecionar Cliente:</label>
+                    <input type="text" placeholder="Nome, Telefone ou CPF do cliente..." class="search-box" style="width: 100%;">
+                    <p style="margin-top: 10px; font-size: 13px;">
+                        <a href="#" style="color: #00B0FF;">Cliente novo? Clique para cadastrar.</a>
+                    </p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Data:</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Hora:</label>
+                        <input type="time">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Serviço:</label>
+                        <select>
+                            <option>Consulta (R$ 250,00)</option>
+                            <option>Retorno (R$ 150,00)</option>
+                            <option>Procedimento (R$ 450,00)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Forma de Pagamento:</label>
+                        <select>
+                            <option>Dinheiro</option>
+                            <option>PIX</option>
+                            <option>Cartão de Crédito</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Consultório:</label>
+                    <select>
+                        <option>Consultório 1</option>
+                        <option>Consultório 2</option>
+                        <option>Consultório 3</option>
+                    </select>
+                </div>
+
+                <button type="submit" style="width: 100%; background: #3f017d; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    Agendar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: PACIENTES ========== -->
+    <div id="page-clientes" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-address-book" style="margin-right: 10px;"></i>
+            Gestão de Pacientes
+        </h1>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Lista de Pacientes</h3>
+                <input type="text" class="search-box" placeholder="Buscar por nome, telefone ou CPF...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>CPF</th>
+                        <th>Nascimento</th>
+                        <th>Cadastro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Maria Silva Santos</td>
+                        <td>(84) 99123-4567</td>
+                        <td>123.456.789-00</td>
+                        <td>15/03/1985</td>
+                        <td>10/01/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>João Pedro Santos</td>
+                        <td>(84) 99234-5678</td>
+                        <td>234.567.890-11</td>
+                        <td>22/07/1990</td>
+                        <td>15/02/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ana Costa Oliveira</td>
+                        <td>(84) 99345-6789</td>
+                        <td>345.678.901-22</td>
+                        <td>08/11/1978</td>
+                        <td>20/03/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Carlos Eduardo Lima</td>
+                        <td>(84) 99456-7890</td>
+                        <td>456.789.012-33</td>
+                        <td>30/05/1982</td>
+                        <td>05/04/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Paula Fernanda Rocha</td>
+                        <td>(84) 99567-8901</td>
+                        <td>567.890.123-44</td>
+                        <td>12/09/1995</td>
+                        <td>18/05/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: DOCUMENTOS ========== -->
+    <div id="page-documentos" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-file-medical" style="margin-right: 10px;"></i>
+            Documentos Clínicos
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Prontuários</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-file-medical-alt"></i>
+                    </div>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Receituários</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-prescription"></i>
+                    </div>
+                </div>
+                <div class="stat-value">89</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Atestados</span>
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                </div>
+                <div class="stat-value">34</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Requisições</span>
+                    <div class="stat-icon red">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                </div>
+                <div class="stat-value">67</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Solicitados
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Documentos Recentes</h3>
+                <input type="text" class="search-box" placeholder="Buscar documentos...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Paciente</th>
+                        <th>Tipo</th>
+                        <th>Profissional</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>25/01/2026</td>
+                        <td>Maria Silva</td>
+                        <td><span class="badge info">Prontuário</span></td>
+                        <td>Dr. João Carvalho</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>24/01/2026</td>
+                        <td>João Santos</td>
+                        <td><span class="badge success">Receituário</span></td>
+                        <td>Dra. Ana Lima</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>23/01/2026</td>
+                        <td>Ana Costa</td>
+                        <td><span class="badge warning">Atestado</span></td>
+                        <td>Dr. João Carvalho</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: FINANCEIRO ========== -->
+    <div id="page-financeiro" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-dollar-sign" style="margin-right: 10px;"></i>
+            Gestão Financeira
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Receitas Hoje</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 4.250</div>
+                <div class="stat-change">
+                    <i class="fas fa-money-bill-wave"></i> Entradas
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Despesas Hoje</span>
+                    <div class="stat-icon red">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 320</div>
+                <div class="stat-change">
+                    <i class="fas fa-wallet"></i> Saídas
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Saldo do Dia</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 3.930</div>
+                <div class="stat-change">
+                    <i class="fas fa-calculator"></i> Líquido
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Faturamento Mensal</span>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 28.450</div>
+                <div class="stat-change">
+                    <i class="fas fa-calendar"></i> Janeiro
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Movimentações do Dia</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Forma</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14:32</td>
+                        <td>Consulta - Maria Silva</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>PIX</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 250,00</td>
+                    </tr>
+                    <tr>
+                        <td>13:45</td>
+                        <td>Procedimento - João Santos</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>Dinheiro</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 450,00</td>
+                    </tr>
+                    <tr>
+                        <td>12:20</td>
+                        <td>Compra de materiais</td>
+                        <td><span class="badge danger">Despesa</span></td>
+                        <td>Cartão Débito</td>
+                        <td style="color: #ff4444; font-weight: 700;">- R$ 320,00</td>
+                    </tr>
+                    <tr>
+                        <td>11:15</td>
+                        <td>Consulta - Ana Costa</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>Cartão Crédito</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 300,00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: RELATÓRIOS ========== -->
+    <div id="page-relatorios" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-chart-bar" style="margin-right: 10px;"></i>
+            Relatórios e Análises
+        </h1>
+
+        <div class="table-container" style="margin-bottom: 30px;">
+            <div class="table-header">
+                <h3 class="table-title">Atendimentos por Profissional (Mês Atual)</h3>
+            </div>
+            <div class="chart-container">
+                <div class="bar-item">
+                    <div class="bar" style="height: 90%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dr. João</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 75%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dra. Ana</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 60%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dr. Carlos</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 55%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dra. Paula</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Serviços Mais Realizados</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Consulta</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">156</td>
+                        </tr>
+                        <tr>
+                            <td>Retorno</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">89</td>
+                        </tr>
+                        <tr>
+                            <td>Procedimento</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">67</td>
+                        </tr>
+                        <tr>
+                            <td>Avaliação</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">45</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Formas de Pagamento</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>PIX</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 12.450</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Crédito</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 8.900</td>
+                        </tr>
+                        <tr>
+                            <td>Dinheiro</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 5.320</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Débito</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 1.780</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // ========== NAVEGAÇÃO ENTRE PÁGINAS ==========
+    const menuItems = document.querySelectorAll('.sidebar li[data-page]');
+    const pages = document.querySelectorAll('.page-content');
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const targetPage = item.getAttribute('data-page');
+            
+            // Remove active de todos
+            menuItems.forEach(mi => mi.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Adiciona active no clicado
+            item.classList.add('active');
+            document.getElementById('page-' + targetPage).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>

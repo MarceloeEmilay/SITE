@@ -100,25 +100,49 @@
             width: 100%;
         }
 
+        /* Botão Login */
         .btn-login {
             background: white;
-            color: var(--primary);
+            color: #000C66 !important;
             padding: 12px 30px;
             border-radius: 50px;
             font-weight: 600;
+            text-decoration: none;
             border: 2px solid white;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .navbar.scrolled .btn-login {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: #000C66;
+            color: white !important;
+            border-color: #000C66;
         }
 
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 12, 102, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            opacity: 0.9;
+        }
+
+        /* Menu Mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .navbar.scrolled .menu-toggle span {
+            background: var(--dark);
         }
 
         /* ========== HERO SECTION ========== */
@@ -198,6 +222,7 @@
         .hero-buttons {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
             animation: fadeInUp 0.8s ease-out 0.4s backwards;
         }
 
@@ -212,81 +237,35 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s;
-            border: 2px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 176, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background: transparent;
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 176, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 176, 255, 0.4);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             padding: 18px 40px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: var(--primary);
-            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ========== HERO VISUAL ========== */
-        .hero-visual {
-            position: relative;
-            animation: fadeInUp 0.8s ease-out 0.6s backwards;
-        }
-
-        .dashboard-mockup {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .mockup-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .mockup-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .mockup-content {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mockup-icon {
-            font-size: 8rem;
-            opacity: 0.2;
-        }
-
-        /* ========== STATS SECTION ========== */
+        /* ========== STATS ========== */
         .stats {
             background: white;
             padding: 80px 0;
-            position: relative;
         }
 
         .stats .container {
@@ -302,13 +281,19 @@
             text-align: center;
             padding: 30px;
             border-radius: 15px;
-            background: var(--light);
             transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .stat-card.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .stat-card:hover {
+            background: var(--light);
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .stat-number {
@@ -319,14 +304,15 @@
         }
 
         .stat-label {
+            font-size: 1rem;
             color: #666;
-            font-size: 0.95rem;
+            font-weight: 500;
         }
 
-        /* ========== FEATURES SECTION ========== */
+        /* ========== FEATURES ========== */
         .features {
-            padding: 120px 0;
             background: var(--light);
+            padding: 100px 0;
         }
 
         .features .container {
@@ -337,23 +323,33 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .section-header.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s;
         }
 
         .section-tag {
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
         .section-title {
             font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
             font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 20px;
         }
 
         .section-description {
@@ -365,64 +361,48 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
         }
 
         .feature-card {
             background: white;
-            padding: 40px;
+            padding: 35px;
             border-radius: 20px;
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 0;
-            background: var(--accent);
-            transition: height 0.3s;
-        }
-
-        .feature-card:hover::before {
-            height: 100%;
+        .feature-card.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 12, 102, 0.1);
-            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
         .feature-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 25px;
-            font-size: 2rem;
-            color: var(--accent);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
+            font-size: 1.8rem;
+            color: white;
         }
 
         .feature-title {
             font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
+            color: var(--dark);
             margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .feature-description {
@@ -430,44 +410,24 @@
             line-height: 1.6;
         }
 
-        /* ========== CTA SECTION ========== */
+        /* ========== CTA ========== */
         .cta {
-            padding: 100px 0;
             background: var(--gradient);
-            color: white;
+            padding: 100px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 176, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            color: white;
         }
 
         .cta .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 30px;
-            position: relative;
-            z-index: 1;
         }
 
         .cta h2 {
             font-size: 2.5rem;
+            margin-bottom: 20px;
             font-weight: 800;
-            margin-bottom: 25px;
         }
 
         .cta p {
@@ -479,7 +439,7 @@
         /* ========== FOOTER ========== */
         footer {
             background: var(--dark);
-            color: #666;
+            color: white;
             padding: 60px 0 30px;
         }
 
@@ -492,24 +452,23 @@
         .footer-content {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
+            gap: 50px;
             margin-bottom: 40px;
         }
 
         .footer-brand img {
             height: 40px;
-            filter: brightness(0) invert(1);
-            opacity: 0.5;
             margin-bottom: 20px;
         }
 
         .footer-brand p {
-            color: #888;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
+            max-width: 300px;
         }
 
         .footer-title {
-            color: white;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 20px;
         }
@@ -523,90 +482,178 @@
         }
 
         .footer-links a {
-            color: #888;
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            transition: all 0.3s;
+            transition: color 0.3s;
         }
 
         .footer-links a:hover {
             color: var(--accent);
-            padding-left: 5px;
         }
 
         .footer-bottom {
-            border-top: 1px solid #222;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 30px;
             text-align: center;
-            color: #666;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ========== RESPONSIVO ========== */
-        @media (max-width: 768px) {
-            .hero .container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .stats .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-
-        /* ========== SCROLL ANIMATIONS ========== */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s ease-out;
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* ========== RESPONSIVIDADE MOBILE ========== */
+        @media (max-width: 968px) {
+            /* Menu Mobile */
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(0, 12, 102, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 40px 30px;
+                gap: 30px;
+                transition: left 0.4s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .navbar.scrolled .nav-links {
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            /* Hero */
+            .hero .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .hero-visual img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Stats */
+            .stats .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            /* Features */
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Footer */
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .cta h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats .container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .navbar .container {
+                padding: 0 20px;
+            }
+        }
     </style>
 </head>
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">
+            <div class="logo">
                 <img src="static/logo.png" alt="New Screen">
-            </a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <div class="nav-links">
-                <a href="#solucoes">Soluções</a>
                 <a href="#funcionalidades">Funcionalidades</a>
+                <a href="solucoes.html">Soluções</a>
+                <a href="precos.html">Preços</a>
+                <a href="contato.html">Contato</a>
                 <a href="onboarding.html" class="btn-login">Começar Agora</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>A <span>evolução digital</span> da sua clínica começa aqui.</h1>
-                <p>Sistema completo de gestão clínica com tecnologia de ponta: agendamentos inteligentes, controle financeiro automático, documentos clínicos digitais e muito mais.</p>
+                <h1>A <span>evolução digital</span> da sua clínica começa aqui</h1>
+                <p>Sistema completo de gestão com mais de 17 módulos integrados. Agendamentos, prontuários, filas, financeiro e muito mais em uma única plataforma.</p>
                 <div class="hero-buttons">
                     <a href="onboarding.html" class="btn-primary">
-                        Começar Gratuitamente <i class="fas fa-arrow-right"></i>
+                        Começar Agora <i class="fas fa-arrow-right"></i>
                     </a>
                     <a href="#funcionalidades" class="btn-secondary">
                         Conhecer Recursos
@@ -614,16 +661,7 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="dashboard-mockup">
-                    <div class="mockup-header">
-                        <div class="mockup-dot"></div>
-                        <div class="mockup-dot"></div>
-                        <div class="mockup-dot"></div>
-                    </div>
-                    <div class="mockup-content">
-                        <i class="fas fa-laptop-medical mockup-icon"></i>
-                    </div>
-                </div>
+                <img src="static/mockup.png" alt="New Screen" style="width: 100%; animation: fadeInUp 0.8s ease-out 0.6s backwards;">
             </div>
         </div>
     </section>
@@ -637,7 +675,7 @@
             </div>
             <div class="stat-card reveal">
                 <div class="stat-number">100%</div>
-                <div class="stat-label">Baseado em Nuvem</div>
+                <div class="stat-label">Instalação Local</div>
             </div>
             <div class="stat-card reveal">
                 <div class="stat-number">24/7</div>
@@ -750,9 +788,9 @@
                     <h4 class="footer-title">Produto</h4>
                     <ul class="footer-links">
                         <li><a href="#funcionalidades">Funcionalidades</a></li>
-                        <li><a href="#solucoes">Soluções</a></li>
-                        <li><a href="#">Preços</a></li>
-                        <li><a href="#">Roadmap</a></li>
+                        <li><a href="solucoes.html">Soluções</a></li>
+                        <li><a href="precos.html">Preços</a></li>
+                        <li><a href="demo.html">Demonstração</a></li>
                     </ul>
                 </div>
                 <div>
@@ -761,7 +799,7 @@
                         <li><a href="#">Sobre</a></li>
                         <li><a href="#">Blog</a></li>
                         <li><a href="#">Carreira</a></li>
-                        <li><a href="#">Contato</a></li>
+                        <li><a href="contato.html">Contato</a></li>
                     </ul>
                 </div>
                 <div>
@@ -775,7 +813,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 New Screen. Todos os direitos reservados. | CNPJ: XX.XXX.XXX/XXXX-XX</p>
+                <p>&copy; 2026 New Screen. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -790,6 +828,12 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // MENU MOBILE TOGGLE
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
 
         // REVEAL ANIMATIONS
         const revealElements = document.querySelectorAll('.reveal');
@@ -806,7 +850,7 @@
         };
 
         window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Executa ao carregar
+        revealOnScroll();
 
         // SMOOTH SCROLL
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

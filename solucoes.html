@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções | New Screen</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #000C66;
+            --accent: #00B0FF;
+            --dark: #0a0a0a;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #000C66 0%, #001a4d 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background: white;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            color: white !important;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== SOLUÇÕES ========== */
+        .solutions {
+            padding: 100px 0;
+        }
+
+        .solutions .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .solution-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+            padding: 60px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .solution-card:nth-child(even) {
+            direction: rtl;
+        }
+
+        .solution-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .solution-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .solution-content p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .solution-features {
+            list-style: none;
+        }
+
+        .solution-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .solution-features li i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .solution-image {
+            position: relative;
+        }
+
+        .solution-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-badge {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        /* ========== CTA ========== */
+        .cta {
+            background: var(--gradient);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 176, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 176, 255, 0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand img {
+            height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .solution-card {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .solution-card:nth-child(even) {
+                direction: ltr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="static/logo.png" alt="New Screen">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="index.html#funcionalidades">Funcionalidades</a>
+                <a href="precos.html">Preços</a>
+                <a href="contato.html">Contato</a>
+                <a href="demo.html" class="btn-login">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Soluções Personalizadas para Cada Especialidade</h1>
+            <p>Sistemas desenvolvidos especificamente para atender as necessidades únicas de cada área da saúde</p>
+        </div>
+    </section>
+
+    <!-- SOLUÇÕES -->
+    <section class="solutions">
+        <div class="container">
+            
+            <!-- Clínicas Médicas -->
+            <div class="solution-card">
+                <div class="solution-content">
+                    <div class="icon-badge">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h2>Clínicas Médicas</h2>
+                    <p>Sistema completo para gestão de clínicas de todas as especialidades médicas, com prontuários eletrônicos, agendamento inteligente e controle financeiro.</p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check-circle"></i> Prontuário Eletrônico Completo (PEP)</li>
+                        <li><i class="fas fa-check-circle"></i> Prescrição de Receitas Digitais</li>
+                        <li><i class="fas fa-check-circle"></i> Integração com Laboratórios</li>
+                        <li><i class="fas fa-check-circle"></i> Gestão de Convênios</li>
+                        <li><i class="fas fa-check-circle"></i> Relatórios Médicos Personalizados</li>
+                    </ul>
+                </div>
+                <div class="solution-image">
+                    <img src="static/mockup.png" alt="Clínicas Médicas">
+                </div>
+            </div>
+
+            <!-- Clínicas Odontológicas -->
+            <div class="solution-card">
+                <div class="solution-content">
+                    <div class="icon-badge">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <h2>Clínicas Odontológicas</h2>
+                    <p>Solução especializada para odontologia com odontograma digital, controle de tratamentos e gestão de procedimentos específicos.</p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check-circle"></i> Odontograma Digital Interativo</li>
+                        <li><i class="fas fa-check-circle"></i> Plano de Tratamento Detalhado</li>
+                        <li><i class="fas fa-check-circle"></i> Galeria de Imagens do Paciente</li>
+                        <li><i class="fas fa-check-circle"></i> Controle de Orçamentos</li>
+                        <li><i class="fas fa-check-circle"></i> Gestão de Material Odontológico</li>
+                    </ul>
+                </div>
+                <div class="solution-image">
+                    <img src="static/mockup.png" alt="Clínicas Odontológicas">
+                </div>
+            </div>
+
+            <!-- Centros Multidisciplinares -->
+            <div class="solution-card">
+                <div class="solution-content">
+                    <div class="icon-badge">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h2>Centros Multidisciplinares</h2>
+                    <p>Plataforma integrada para clínicas com múltiplas especialidades, permitindo gestão centralizada e compartilhamento seguro de informações.</p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check-circle"></i> Gestão Multi-Especialidades</li>
+                        <li><i class="fas fa-check-circle"></i> Compartilhamento de Prontuários</li>
+                        <li><i class="fas fa-check-circle"></i> Agenda Unificada</li>
+                        <li><i class="fas fa-check-circle"></i> Controle de Salas e Equipamentos</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Gerencial Completo</li>
+                    </ul>
+                </div>
+                <div class="solution-image">
+                    <img src="static/mockup.png" alt="Centros Multidisciplinares">
+                </div>
+            </div>
+
+            <!-- Consultórios Individuais -->
+            <div class="solution-card">
+                <div class="solution-content">
+                    <div class="icon-badge">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h2>Consultórios Individuais</h2>
+                    <p>Solução simplificada e eficiente para profissionais autônomos que buscam organizar sua rotina e melhorar o atendimento.</p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check-circle"></i> Interface Simplificada</li>
+                        <li><i class="fas fa-check-circle"></i> Agenda Pessoal Inteligente</li>
+                        <li><i class="fas fa-check-circle"></i> Lembretes Automáticos WhatsApp</li>
+                        <li><i class="fas fa-check-circle"></i> Controle Financeiro Básico</li>
+                        <li><i class="fas fa-check-circle"></i> Plano Acessível</li>
+                    </ul>
+                </div>
+                <div class="solution-image">
+                    <img src="static/mockup.png" alt="Consultórios Individuais">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Encontre a solução ideal para sua clínica</h2>
+            <p>Fale conosco e descubra como podemos ajudar seu negócio a crescer</p>
+            <a href="onboarding.html" class="btn-primary">
+                Solicitar Demonstração <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="static/logo.png" alt="New Screen">
+                    <p>Sistemas inteligentes para gestão de clínicas médicas, odontológicas e multidisciplinares.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Produto</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#funcionalidades">Funcionalidades</a></li>
+                        <li><a href="solucoes.html">Soluções</a></li>
+                        <li><a href="precos.html">Preços</a></li>
+                        <li><a href="demo.html">Demonstração</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Empresa</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Carreira</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Suporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Documentação</a></li>
+                        <li><a href="#">Status do Sistema</a></li>
+                        <li><a href="#">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 New Screen. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

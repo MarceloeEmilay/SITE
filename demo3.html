@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstração do Sistema | New Screen</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #000C66;
+            --accent: #00B0FF;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --border: #e5e7eb;
+            --gradient: linear-gradient(135deg, #000C66 0%, #001a4d 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background: var(--light);
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-demo {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-demo:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ========== HERO ========== */
+        .hero-demo {
+            background: var(--gradient);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .hero-demo .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .demo-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* ========== DASHBOARD MOCKUP ========== */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: -30px auto 80px;
+            padding: 0 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .dashboard-layout {
+            display: flex;
+            min-height: 700px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--gradient);
+            color: white;
+            padding: 30px 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            padding: 0 25px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-left-color: var(--accent);
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        /* ========== STATS CARDS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-icon.blue {
+            background: #e3f2fd;
+            color: var(--accent);
+        }
+
+        .stat-icon.green {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .stat-icon.yellow {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-icon.red {
+            background: #fee2e2;
+            color: var(--error);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            color: var(--error);
+        }
+
+        /* ========== TABLE ========== */
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .search-box {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 250px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--light);
+        }
+
+        th {
+            padding: 15px 25px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 15px 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        tbody tr {
+            transition: all 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge.success {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* ========== CHART PLACEHOLDER ========== */
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .chart-mockup {
+            height: 300px;
+            background: linear-gradient(to top, #e3f2fd 0%, transparent 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .bar {
+            background: var(--accent);
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+            opacity: 0.8;
+        }
+
+        .bar:hover {
+            opacity: 1;
+            transform: scaleY(1.05);
+        }
+
+        /* ========== CONTENT SECTIONS ========== */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-demo {
+            padding: 80px 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-demo .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn-cta {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-cta-primary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 968px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="static/logo.png" alt="New Screen">
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn-demo btn-outline">Voltar ao Site</a>
+                <a href="onboarding.html" class="btn-demo">Começar Grátis</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-demo">
+        <div class="container">
+            <div class="demo-badge">
+                <i class="fas fa-eye"></i> Demonstração Interativa
+            </div>
+            <h1 class="hero-title">Explore o Sistema New Screen</h1>
+            <p class="hero-subtitle">
+                Navegue pelas principais funcionalidades e veja como podemos revolucionar sua clínica
+            </p>
+        </div>
+    </section>
+
+    <!-- DASHBOARD MOCKUP -->
+    <div class="dashboard-container">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-layout">
+                
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <div class="sidebar-brand">
+                        <div class="brand-name">Clínica Demo</div>
+                        <div class="brand-subtitle">Modo Demonstração</div>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li class="menu-item active" data-section="dashboard">
+                            <i class="fas fa-chart-line menu-icon"></i>
+                            <span>Dashboard</span>
+                        </li>
+                        <li class="menu-item" data-section="agendamentos">
+                            <i class="fas fa-calendar-check menu-icon"></i>
+                            <span>Agendamentos</span>
+                        </li>
+                        <li class="menu-item" data-section="pacientes">
+                            <i class="fas fa-users menu-icon"></i>
+                            <span>Pacientes</span>
+                        </li>
+                        <li class="menu-item" data-section="financeiro">
+                            <i class="fas fa-dollar-sign menu-icon"></i>
+                            <span>Financeiro</span>
+                        </li>
+                        <li class="menu-item" data-section="documentos">
+                            <i class="fas fa-file-medical menu-icon"></i>
+                            <span>Documentos</span>
+                        </li>
+                    </ul>
+                </aside>
+
+                <!-- MAIN CONTENT -->
+<div class="content">
+
+    <!-- ========== PÁGINA: DASHBOARD ========== -->
+    <div id="page-dashboard" class="page-content active">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-home" style="margin-right: 10px;"></i>
+            Dashboard - Visão Geral
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Agendamentos Hoje</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="stat-value">23</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> +3 em relação a ontem
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Na Fila de Espera</span>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-change">
+                    <i class="fas fa-users"></i> Aguardando
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Atendidos Hoje</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-value">15</div>
+                <div class="stat-change">
+                    <i class="fas fa-check"></i> Concluídos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Faturamento Hoje</span>
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 4.250</div>
+                <div class="stat-change">
+                    <i class="fas fa-money-bill-wave"></i> Receita
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Atendimentos da Semana</h3>
+            </div>
+            <div class="chart-container">
+                <div class="bar-item">
+                    <div class="bar" style="height: 70%;"></div>
+                    <div class="bar-label">Seg</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 85%;"></div>
+                    <div class="bar-label">Ter</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar-label">Qua</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 90%;"></div>
+                    <div class="bar-label">Qui</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 75%;"></div>
+                    <div class="bar-label">Sex</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 40%;"></div>
+                    <div class="bar-label">Sáb</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Atividade Recente</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Horário</th>
+                        <th>Paciente</th>
+                        <th>Ação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14:32</td>
+                        <td>Maria Silva</td>
+                        <td>Check-in realizado</td>
+                        <td><span class="badge info">Aguardando</span></td>
+                    </tr>
+                    <tr>
+                        <td>14:15</td>
+                        <td>João Santos</td>
+                        <td>Atendimento concluído</td>
+                        <td><span class="badge success">Concluído</span></td>
+                    </tr>
+                    <tr>
+                        <td>13:58</td>
+                        <td>Ana Costa</td>
+                        <td>Paciente chamado</td>
+                        <td><span class="badge warning">Em atendimento</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: CONTROLE ========== -->
+    <div id="page-controle" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-list" style="margin-right: 10px;"></i>
+            Controle de Atendimento
+        </h1>
+
+        <div class="table-container" style="margin-bottom: 30px;">
+            <div class="table-header">
+                <h3 class="table-title">Fila de Espera - Pendentes</h3>
+            </div>
+            <div style="padding: 20px;">
+                <div class="queue-item aguardando">
+                    <div class="patient-info">
+                        <div class="status-dot aguardando"></div>
+                        <div class="patient-details">
+                            <h4>Maria Silva</h4>
+                            <p>14:30 • Consulta • Consultório 1</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="queue-item prioridade">
+                    <div class="patient-info">
+                        <div class="status-dot chamado"></div>
+                        <div class="patient-details">
+                            <h4><i class="fas fa-star" style="color: #ffc107; margin-right: 5px;"></i>José Almeida (Prioritário)</h4>
+                            <p>14:45 • Retorno • Consultório 2</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="queue-item aguardando">
+                    <div class="patient-info">
+                        <div class="status-dot aguardando"></div>
+                        <div class="patient-details">
+                            <h4>Paulo Roberto</h4>
+                            <p>15:00 • Procedimento • Consultório 1</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-circle blue" title="Chamar">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="btn-circle green" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn-circle purple" title="Atender">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-circle red" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Concluídos Hoje</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Horário</th>
+                        <th>Serviço</th>
+                        <th>Consultório</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>João Santos</td>
+                        <td>14:15</td>
+                        <td>Consulta</td>
+                        <td>Consultório 1</td>
+                    </tr>
+                    <tr>
+                        <td>Carlos Oliveira</td>
+                        <td>13:45</td>
+                        <td>Retorno</td>
+                        <td>Consultório 2</td>
+                    </tr>
+                    <tr>
+                        <td>Ana Paula</td>
+                        <td>13:20</td>
+                        <td>Avaliação</td>
+                        <td>Consultório 1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: AGENDAR ========== -->
+    <div id="page-agendar" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-calendar-plus" style="margin-right: 10px;"></i>
+            Agendar Atendimento
+        </h1>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>Buscar/Selecionar Cliente:</label>
+                    <input type="text" placeholder="Nome, Telefone ou CPF do cliente..." class="search-box" style="width: 100%;">
+                    <p style="margin-top: 10px; font-size: 13px;">
+                        <a href="#" style="color: #00B0FF;">Cliente novo? Clique para cadastrar.</a>
+                    </p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Data:</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Hora:</label>
+                        <input type="time">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Serviço:</label>
+                        <select>
+                            <option>Consulta (R$ 250,00)</option>
+                            <option>Retorno (R$ 150,00)</option>
+                            <option>Procedimento (R$ 450,00)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Forma de Pagamento:</label>
+                        <select>
+                            <option>Dinheiro</option>
+                            <option>PIX</option>
+                            <option>Cartão de Crédito</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Consultório:</label>
+                    <select>
+                        <option>Consultório 1</option>
+                        <option>Consultório 2</option>
+                        <option>Consultório 3</option>
+                    </select>
+                </div>
+
+                <button type="submit" style="width: 100%; background: #3f017d; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    Agendar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: PACIENTES ========== -->
+    <div id="page-clientes" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-address-book" style="margin-right: 10px;"></i>
+            Gestão de Pacientes
+        </h1>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Lista de Pacientes</h3>
+                <input type="text" class="search-box" placeholder="Buscar por nome, telefone ou CPF...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>CPF</th>
+                        <th>Nascimento</th>
+                        <th>Cadastro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Maria Silva Santos</td>
+                        <td>(84) 99123-4567</td>
+                        <td>123.456.789-00</td>
+                        <td>15/03/1985</td>
+                        <td>10/01/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>João Pedro Santos</td>
+                        <td>(84) 99234-5678</td>
+                        <td>234.567.890-11</td>
+                        <td>22/07/1990</td>
+                        <td>15/02/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ana Costa Oliveira</td>
+                        <td>(84) 99345-6789</td>
+                        <td>345.678.901-22</td>
+                        <td>08/11/1978</td>
+                        <td>20/03/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Carlos Eduardo Lima</td>
+                        <td>(84) 99456-7890</td>
+                        <td>456.789.012-33</td>
+                        <td>30/05/1982</td>
+                        <td>05/04/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Paula Fernanda Rocha</td>
+                        <td>(84) 99567-8901</td>
+                        <td>567.890.123-44</td>
+                        <td>12/09/1995</td>
+                        <td>18/05/2024</td>
+                        <td>
+                            <button class="btn-circle purple" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: DOCUMENTOS ========== -->
+    <div id="page-documentos" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-file-medical" style="margin-right: 10px;"></i>
+            Documentos Clínicos
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Prontuários</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-file-medical-alt"></i>
+                    </div>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Receituários</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-prescription"></i>
+                    </div>
+                </div>
+                <div class="stat-value">89</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Atestados</span>
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                </div>
+                <div class="stat-value">34</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Emitidos
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Requisições</span>
+                    <div class="stat-icon red">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                </div>
+                <div class="stat-value">67</div>
+                <div class="stat-change">
+                    <i class="fas fa-file"></i> Solicitados
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Documentos Recentes</h3>
+                <input type="text" class="search-box" placeholder="Buscar documentos...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Paciente</th>
+                        <th>Tipo</th>
+                        <th>Profissional</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>25/01/2026</td>
+                        <td>Maria Silva</td>
+                        <td><span class="badge info">Prontuário</span></td>
+                        <td>Dr. João Carvalho</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>24/01/2026</td>
+                        <td>João Santos</td>
+                        <td><span class="badge success">Receituário</span></td>
+                        <td>Dra. Ana Lima</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>23/01/2026</td>
+                        <td>Ana Costa</td>
+                        <td><span class="badge warning">Atestado</span></td>
+                        <td>Dr. João Carvalho</td>
+                        <td>
+                            <button class="btn-circle blue" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-circle green" title="Imprimir">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: FINANCEIRO ========== -->
+    <div id="page-financeiro" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-dollar-sign" style="margin-right: 10px;"></i>
+            Gestão Financeira
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Receitas Hoje</span>
+                    <div class="stat-icon green">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 4.250</div>
+                <div class="stat-change">
+                    <i class="fas fa-money-bill-wave"></i> Entradas
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Despesas Hoje</span>
+                    <div class="stat-icon red">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 320</div>
+                <div class="stat-change">
+                    <i class="fas fa-wallet"></i> Saídas
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Saldo do Dia</span>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 3.930</div>
+                <div class="stat-change">
+                    <i class="fas fa-calculator"></i> Líquido
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Faturamento Mensal</span>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <div class="stat-value">R$ 28.450</div>
+                <div class="stat-change">
+                    <i class="fas fa-calendar"></i> Janeiro
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Movimentações do Dia</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Forma</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14:32</td>
+                        <td>Consulta - Maria Silva</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>PIX</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 250,00</td>
+                    </tr>
+                    <tr>
+                        <td>13:45</td>
+                        <td>Procedimento - João Santos</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>Dinheiro</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 450,00</td>
+                    </tr>
+                    <tr>
+                        <td>12:20</td>
+                        <td>Compra de materiais</td>
+                        <td><span class="badge danger">Despesa</span></td>
+                        <td>Cartão Débito</td>
+                        <td style="color: #ff4444; font-weight: 700;">- R$ 320,00</td>
+                    </tr>
+                    <tr>
+                        <td>11:15</td>
+                        <td>Consulta - Ana Costa</td>
+                        <td><span class="badge success">Receita</span></td>
+                        <td>Cartão Crédito</td>
+                        <td style="color: #25D366; font-weight: 700;">+ R$ 300,00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========== PÁGINA: RELATÓRIOS ========== -->
+    <div id="page-relatorios" class="page-content">
+        <h1 style="color: #3f017d; font-size: 28px; display: flex; align-items: center; margin-bottom: 25px;">
+            <i class="fas fa-chart-bar" style="margin-right: 10px;"></i>
+            Relatórios e Análises
+        </h1>
+
+        <div class="table-container" style="margin-bottom: 30px;">
+            <div class="table-header">
+                <h3 class="table-title">Atendimentos por Profissional (Mês Atual)</h3>
+            </div>
+            <div class="chart-container">
+                <div class="bar-item">
+                    <div class="bar" style="height: 90%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dr. João</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 75%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dra. Ana</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 60%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dr. Carlos</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: 55%; background: linear-gradient(180deg, #6f42c1, #3f017d);"></div>
+                    <div class="bar-label">Dra. Paula</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Serviços Mais Realizados</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Consulta</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">156</td>
+                        </tr>
+                        <tr>
+                            <td>Retorno</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">89</td>
+                        </tr>
+                        <tr>
+                            <td>Procedimento</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">67</td>
+                        </tr>
+                        <tr>
+                            <td>Avaliação</td>
+                            <td style="text-align: right; font-weight: 700; color: #3f017d;">45</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Formas de Pagamento</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>PIX</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 12.450</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Crédito</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 8.900</td>
+                        </tr>
+                        <tr>
+                            <td>Dinheiro</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 5.320</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Débito</td>
+                            <td style="text-align: right; font-weight: 700; color: #25D366;">R$ 1.780</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <!-- CTA -->
+    <section class="cta-demo">
+        <div class="container">
+            <h2 class="cta-title">Gostou do que viu?</h2>
+            <p class="cta-subtitle">
+                Comece seu teste gratuito agora e transforme a gestão da sua clínica
+            </p>
+            <div class="cta-buttons">
+                <a href="onboarding.html" class="btn-cta btn-cta-primary">
+                    Iniciar Teste Grátis de 30 Dias
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ========== NAVEGAÇÃO ENTRE SEÇÕES ==========
+        const menuItems = document.querySelectorAll('.menu-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active de todos
+                menuItems.forEach(mi => mi.classList.remove('active'));
+                contentSections.forEach(cs => cs.classList.remove('active'));
+
+                // Adiciona active no clicado
+                item.classList.add('active');
+                const sectionId = item.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+
+                // Scroll suave para o topo
+                document.querySelector('.main-content').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // ========== ANIMAÇÃO DAS BARRAS DO GRÁFICO ==========
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.transition = 'height 1s ease-out';
+                    const currentHeight = bar.style.height;
+                    bar.style.height = '0';
+                    setTimeout(() => {
+                        bar.style.height = currentHeight;
+                    }, 100);
+                }, index * 100);
+            });
+        });
+
+        // ========== INTERATIVIDADE DOS BOTÕES (FEEDBACK VISUAL) ==========
+        document.querySelectorAll('.btn-action, .btn-primary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Previne comportamento padrão
+                e.preventDefault();
+                
+                // Feedback visual
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Ação registrada!';
+                btn.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 1500);
+            });
+        });
+
+        // ========== SEARCH BOX INTERATIVO ==========
+        document.querySelectorAll('.search-box').forEach(searchBox => {
+            searchBox.addEventListener('input', (e) => {
+                const value = e.target.value.toLowerCase();
+                const table = e.target.closest('.data-table').querySelector('tbody');
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(value) ? '' : 'none';
+                });
+            });
+        });
+
+        // ========== TOOLTIP SIMPLES ==========
+        document.querySelectorAll('[title]').forEach(element => {
+            element.addEventListener('mouseenter', (e) => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip-custom';
+                tooltip.textContent = e.target.getAttribute('title');
+                tooltip.style.cssText = `
+                    position: fixed;
+                    background: var(--dark);
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    font-size: 0.85rem;
+                    z-index: 10000;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(tooltip);
+
+                const rect = e.target.getBoundingClientRect();
+                tooltip.style.top = rect.top - tooltip.offsetHeight - 5 + 'px';
+                tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+
+                e.target._tooltip = tooltip;
+            });
+
+            element.addEventListener('mouseleave', (e) => {
+                if (e.target._tooltip) {
+                    e.target._tooltip.remove();
+                    delete e.target._tooltip;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

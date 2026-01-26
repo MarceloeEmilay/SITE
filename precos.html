@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos e Preços | New Screen</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #000C66;
+            --accent: #00B0FF;
+            --success: #10b981;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #000C66 0%, #001a4d 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background: white;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-nav:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero-pricing {
+            padding: 140px 0 80px;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pricing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><circle cx="100" cy="100" r="200" fill="rgba(0,176,255,0.05)"/><circle cx="1100" cy="300" r="250" fill="rgba(0,176,255,0.05)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-pricing .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* ========== BILLING TOGGLE ========== */
+        .billing-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .billing-option {
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .billing-option.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .save-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* ========== PRICING CARDS ========== */
+        .pricing-section {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .pricing-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 2px solid #e5e7eb;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 176, 255, 0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 176, 255, 0.3);
+        }
+
+        .plan-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card.featured .plan-icon {
+            background: linear-gradient(135deg, var(--accent), #00f2fe);
+            color: white;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .plan-description {
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .price-container {
+            margin-bottom: 30px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .price .currency {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        .price .period {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6b7280;
+            margin-top: 20px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #9ca3af;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #374151;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #dcfce7;
+            color: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .feature-unavailable {
+            opacity: 0.4;
+        }
+
+        .feature-unavailable .feature-icon {
+            background: #f3f4f6;
+            color: #9ca3af;
+        }
+
+        .btn-plan {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-plan-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-plan-primary:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 176, 255, 0.2);
+        }
+
+        .btn-plan-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-plan-secondary:hover {
+            background: white;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ========== COMPARISON TABLE ========== */
+        .comparison-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .comparison-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .comparison-table thead {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .comparison-table thead th {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .check-icon {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .minus-icon {
+            color: #d1d5db;
+            font-size: 1.2rem;
+        }
+
+        /* ========== FAQ SECTION ========== */
+        .faq-section {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .faq-section .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 20px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            padding: 100px 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn-cta {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-cta-primary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 176, 255, 0.3);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-cta-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--dark);
+            color: #6b7280;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 968px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 8px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="static/logo.png" alt="New Screen">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="#planos">Planos</a>
+                <a href="#comparacao">Comparação</a>
+                <a href="#faq">FAQ</a>
+                <a href="onboarding.html" class="btn-nav" style="color: white; text-decoration: none;">Começar Agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-pricing">
+        <div class="container">
+            <div class="hero-tag">PLANOS E PREÇOS</div>
+            <h1 class="hero-title">Escolha o plano ideal para sua clínica</h1>
+            <p class="hero-subtitle">
+                Sem taxas ocultas, sem surpresas. 
+                Cancele quando quiser, solicite um teste de 30 dias no nosso whatsapp.
+            </p>
+
+            <!-- TOGGLE MENSAL/ANUAL -->
+            <div class="billing-toggle">
+                <div class="billing-option active" data-billing="monthly">
+                    Mensal
+                </div>
+                <div class="billing-option" data-billing="yearly">
+                    Anual
+                    <span class="save-badge">Economize 20%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING CARDS -->
+    <section class="pricing-section" id="planos">
+        <div class="container">
+            <div class="pricing-grid">
+                
+                <!-- PLANO BÁSICO -->
+                <div class="pricing-card">
+                    <div class="plan-icon">💊</div>
+                    <h3 class="plan-name">Básico</h3>
+                    <p class="plan-description">
+                        Ideal para consultórios pequenos com até 2 profissionais
+                    </p>
+                    <div class="price-container">
+                        <span class="old-price" style="display: none;">R$ 99,90</span>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="value" data-monthly="99,90" data-yearly="79,90">99,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            1 Consultório
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Até 2 Usuários
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Agendamentos Ilimitados
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Controle de Fila
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Cadastro de Pacientes
+                        </li>
+                        <li class="feature-unavailable">
+                            <div class="feature-icon"><i class="fas fa-times"></i></div>
+                            Módulo Financeiro
+                        </li>
+                        <li class="feature-unavailable">
+                            <div class="feature-icon"><i class="fas fa-times"></i></div>
+                            Documentos Clínicos
+                        </li>
+                    </ul>
+                    <button class="btn-plan btn-plan-secondary">Começar Grátis</button>
+                </div>
+
+                <!-- PLANO PROFISSIONAL -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">🔥 MAIS POPULAR</div>
+                    <div class="plan-icon">💉</div>
+                    <h3 class="plan-name">Profissional</h3>
+                    <p class="plan-description">
+                        Para clínicas completas com gestão financeira e documentos
+                    </p>
+                    <div class="price-container">
+                        <span class="old-price" style="display: none;">R$ 149,90</span>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="value" data-monthly="149,90" data-yearly="119,90">149,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            3 Consultórios
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Até 5 Usuários
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Tudo do Básico +
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Gestão Financeira Completa
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Prontuários e Anamnese
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Receituários e Atestados
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Notificações WhatsApp
+                        </li>
+                    </ul>
+                    <button class="btn-plan btn-plan-primary">Começar Grátis</button>
+                </div>
+
+                <!-- PLANO PREMIUM -->
+                <div class="pricing-card">
+                    <div class="plan-icon">🏥</div>
+                    <h3 class="plan-name">Premium</h3>
+                    <p class="plan-description">
+                        Solução completa para clínicas multidisciplinares
+                    </p>
+                    <div class="price-container">
+                        <span class="old-price" style="display: none;">R$ 249,90</span>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="value" data-monthly="249,90" data-yearly="199">249,90</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Consultórios Ilimitados
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Usuários Ilimitados
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Tudo do Profissional +
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Painel Marketing (TV)
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Relatórios Avançados
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            Suporte Prioritário
+                        </li>
+                        <li>
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            API para Integrações
+                        </li>
+                    </ul>
+                    <button class="btn-plan btn-plan-secondary">Falar com Vendas</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="comparison-section" id="comparacao">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Compare os Planos</h2>
+                <p class="section-description">Veja em detalhes o que cada plano oferece</p>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Funcionalidade</th>
+                        <th>Básico</th>
+                        <th>Profissional</th>
+                        <th>Premium</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Consultórios</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>Ilimitado</td>
+                    </tr>
+                    <tr>
+                        <td>Usuários</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>Ilimitado</td>
+                    </tr>
+                    <tr>
+                        <td>Agendamentos</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Controle de Fila</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Gestão Financeira</td>
+                        <td><i class="fas fa-minus minus-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Documentos Clínicos</td>
+                        <td><i class="fas fa-minus minus-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Painel Interativo/Mkt Indoor (TV)</td>
+                        <td><i class="fas fa-minus minus-icon"></i></td>
+                        <td><i class="fas fa-minus minus-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Relatórios Avançados</td>
+                        <td><i class="fas fa-minus minus-icon"></i></td>
+                        <td>Básicos</td>
+                        <td>Completos</td>
+                    </tr>
+                    <tr>
+                        <td>Suporte</td>
+                        <td>Email</td>
+                        <td>Email + WhatsApp</td>
+                        <td>Prioritário 24/7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-description">Tire suas dúvidas sobre os planos</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Como funciona o período de teste gratuito?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Você tem 30 dias de teste grátis em qualquer plano, sem precisar cadastrar cartão de crédito. Durante esse período, você terá acesso total a todas as funcionalidades do plano escolhido.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Posso mudar de plano depois?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sim! Você pode fazer upgrade ou downgrade do seu plano a qualquer momento. As mudanças são aplicadas imediatamente e o valor é ajustado de forma proporcional.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Quais formas de pagamento são aceitas?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Aceitamos cartão de crédito, PIX e boleto bancário. O pagamento anual pode ser feito com desconto de 20% via PIX ou boleto.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Meus dados estão seguros?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sim! Nosso sistema é 100% compatível com a LGPD. Todos os dados são criptografados e armazenados em servidores seguros com backup automático diário.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Há suporte técnico incluído?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Todos os planos incluem suporte técnico. O Básico tem suporte por email, o Profissional adiciona WhatsApp, e o Premium oferece suporte prioritário 24/7 com tempo de resposta de até 2 horas.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Posso cancelar a qualquer momento?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sim! Não há multa ou taxa de cancelamento. Você pode cancelar sua assinatura a qualquer momento e continuará tendo acesso até o final do período pago.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Pronto para começar?</h2>
+            <p class="cta-subtitle">
+                Junte-se a centenas de clínicas que já revolucionaram sua gestão com New Screen
+            </p>
+            <div class="cta-buttons">
+                <a href="onboarding.html" class="btn-cta btn-cta-primary">
+                    Começar Teste Grátis <i class="fas fa-rocket"></i>
+                </a>
+                <a href="https://wa.me/5574981059128" class="btn-cta btn-cta-secondary">
+                    Falar com Especialista <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 New Screen. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== BILLING TOGGLE ==========
+        const billingOptions = document.querySelectorAll('.billing-option');
+        const priceValues = document.querySelectorAll('.price .value');
+
+        billingOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active de todos
+                billingOptions.forEach(opt => opt.classList.remove('active'));
+                // Adiciona active no clicado
+                option.classList.add('active');
+
+                const billing = option.getAttribute('data-billing');
+                
+                // Atualiza cada preço
+                priceValues.forEach(value => {
+                    const monthly = value.getAttribute('data-monthly');
+                    const yearly = value.getAttribute('data-yearly');
+                    
+                    if (billing === 'yearly') {
+                        value.textContent = yearly;
+                        
+                        // Mostra preço antigo SE EXISTIR
+                        const oldPrice = value.closest('.price-container').querySelector('.old-price');
+                        if (oldPrice) {
+                            oldPrice.style.display = 'block';
+                        }
+                    } else {
+                        value.textContent = monthly;
+                        
+                        // Esconde preço antigo SE EXISTIR
+                        const oldPrice = value.closest('.price-container').querySelector('.old-price');
+                        if (oldPrice) {
+                            oldPrice.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // ========== FAQ ACCORDION ==========
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Fecha todos os outros
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                // Abre o clicado (se não estava aberto)
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
